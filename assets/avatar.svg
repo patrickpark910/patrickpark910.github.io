@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="480" viewBox="0 0 400 480">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c7d7e6" />
+      <stop offset="1" stop-color="#9fb7ce" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="480" fill="url(#bg)" />
+  <circle cx="200" cy="180" r="90" fill="#f2d6c9" />
+  <rect x="95" y="260" width="210" height="160" rx="24" fill="#6c7a89" />
+  <rect x="130" y="240" width="140" height="60" rx="22" fill="#f2d6c9" />
+  <circle cx="170" cy="175" r="8" fill="#2d2d2d" />
+  <circle cx="230" cy="175" r="8" fill="#2d2d2d" />
+  <path d="M160 205 Q200 230 240 205" stroke="#2d2d2d" stroke-width="6" fill="none" />
+  <path d="M115 150 Q200 80 285 150" fill="#3a3a3a" />
+  <text x="200" y="450" font-family="Times New Roman, Times, serif" font-size="28" text-anchor="middle" fill="#2d3b4b">
+    Portrait
+  </text>
+</svg>
