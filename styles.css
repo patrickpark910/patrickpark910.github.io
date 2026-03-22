@@ -1,13 +1,15 @@
 :root {
-  --navy: #e0218a;
-  --navy-dark: #c91575;
+  --navy: #5e5e5e;
+  --navy-dark: #000000;
   --text: #1f2933;
   --muted: #5b6b7b;
   --link: #6915c9;
-  --bg: #ffffff;
+  --bg: #f6f6f6;
   --border: #d9e1ea;
   --purple: #6915c9;
 }
+
+/* princeton orange: #E77500 // purple:  #6c33ad */
 
 * {
   box-sizing: border-box;
@@ -48,14 +50,14 @@ a:hover {
 .site-header {
   background: var(--navy);
   color: #fff;
-  border-bottom: 3px solid var(--navy-dark);
+  border-bottom: 2px solid var(--navy-dark);
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0;
 }
 
 .brand {
@@ -100,7 +102,7 @@ a:hover {
 }
 
 .meta {
-  margin: 6px 0;
+  margin: 0px 0;
   color: #000;
 }
 
@@ -673,14 +675,56 @@ a:hover {
 }
 
 .talk-details {
-  margin-top: 4px;
+  margin-top: 0px;
   color: var(--muted);
   font-size: 12px;
 }
 
+
+.teaching-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 8px 0 0;
+}
+
+.teaching-list li {
+  display: grid;
+  grid-template-columns: 120px 1fr; /* Adjust width as needed */
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, #fff);
+}
+
+.teaching-semester {
+  font-weight: 700;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.teaching-title {
+  font-weight: 700;
+  margin-bottom: 0px;
+}
+
+.teaching-desc {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.teaching-bullets {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 12px;
+}
+
+.teaching-bullets li {
+  margin: 2px 0;
+}
+
 .columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
 }
 

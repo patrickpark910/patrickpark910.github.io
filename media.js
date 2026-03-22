@@ -3,29 +3,30 @@
   const mediaItems = [
     // Only the first 3 are shown as preview cards.
     {
-      url: "https://engineering.uci.edu/news/2024/5/uci-led-team-selected-department-defense-multi-university-initiative-investigating",
-      siteName: "UCI Engineering",
-      title: "UCI-led team selected for Department of Defense multi-university initiative",
-      description:
-        "News release from the Samueli School of Engineering (UCI). Preview rendered locally to avoid external preview blocking.",
-      image: "https://engineering.uci.edu/files/won_reduced.jpg",
+      url: "https://youtu.be/0vFNLbHs3Dk?si=GcrQ9k53t7kcbebh",
+      siteName: "YouTube",
+      title: "Understanding Early Reactor Programs",
+      description: "UMichigan, Nuclear Engineering Summer School 2025",
+      embed: "youtube",
+      date: "09 Jul 2025",
     },
     {
-      url: "https://youtu.be/GLsC6FM6viY",
-      siteName: "YouTube",
-      title: "YouTube video",
-      description: "Watch on YouTube.",
-      embed: "youtube",
+      url: "https://www.epj.org/epjh-news/2904-epjh-highlight-revisiting-the-failure-of-germanys-wartime-nuclear-program",
+      siteName: "European Physical Journal",
+      title: "Article Highlight: Revisiting Germany’s wartime nuclear program",
+      description: "Analysis suggests that the failure of Germany's nuclear program during World War II was strongly tied to the lack of petroleum coke with which to make high-purity graphite: a material which the more successful American program had in abundance.",
+      image: "https://web.archive.org/web/20250706030051im_/https://www.epj.org/images/stories/news/2025/Walther_Bothe_1950s.jpg",
+      date: "01 May 2024",
     },
     {
-      url: "https://youtu.be/7VOwF5kTlh4",
-      siteName: "YouTube",
-      title: "YouTube video",
-      description: "Watch on YouTube.",
-      embed: "youtube",
+      url: "https://www.reed.edu/reed-magazine/articles/2021/goldwater-park-physics.html",
+      siteName: "Reed College",
+      title: "Physics Junior Receives Goldwater Scholarship",
+      description: "Congratulations to Patrick Park ’22 for being named a Goldwater Scholar for demonstrating exceptional promise, intellectual intensity, and a commitment to research in the field of nuclear physics.",
+      image: "https://www.reed.edu/reed-magazine/assets/images/2021/Patrick-Park-22.jpg",
+      date: "29 Apr 2021",
     },
-    "https://engineering.uci.edu/news/2023/6/egerstedt-presents-2023-faculty-awards",
-    "https://www.linkedin.com/posts/university-of-california-irvine_speakup4science-activity-7377008499609944064-d8aX/",
+
   ];
 
   const gridEl = document.getElementById("media-grid");
@@ -37,13 +38,13 @@
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/\"/g, "&quot;")
+      .replace(/"/g, "&quot;")
       .replace(/'/g, "&#39;");
   }
 
   function domainFromUrl(url) {
     try {
-      return new URL(url).hostname.replace(/^www\\./, "");
+      return new URL(url).hostname.replace(/^www\./, "");
     } catch {
       return url;
     }
@@ -157,97 +158,53 @@
     `;
   }
 
-  async function fetchOgMeta(url) {
-    // Browsers block cross-origin HTML fetches for many sites (CORS).
-    // Use a CORS-friendly text proxy. If it fails, we fall back gracefully.
-    const proxyUrl = `https://r.jina.ai/http://${url.replace(/^https?:\\/\\//, "")}`;
-
-    const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), 4500);
-    try {
-      const res = await fetch(proxyUrl, { signal: ctrl.signal });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      const doc = new DOMParser().parseFromString(text, "text/html");
-
-      const pick = (sel) => doc.querySelector(sel)?.getAttribute("content")?.trim() || "";
-      const title =
-        pick('meta[property=\"og:title\"]') ||
-        pick('meta[name=\"twitter:title\"]') ||
-        (doc.querySelector("title")?.textContent || "").trim();
-      const description =
-        pick('meta[property=\"og:description\"]') ||
-        pick('meta[name=\"description\"]') ||
-        pick('meta[name=\"twitter:description\"]');
-      const image = pick('meta[property=\"og:image\"]') || pick('meta[name=\"twitter:image\"]');
-      const siteName = pick('meta[property=\"og:site_name\"]');
-
-      let imageAbs = "";
-      if (image) {
-        try {
-          imageAbs = new URL(image, url).toString();
-        } catch {
-          imageAbs = "";
-        }
-      }
-
-      return {
-        url,
-        title: title || "",
-        description: description || "",
-        image: imageAbs,
-        siteName: siteName || "",
-      };
-    } finally {
-      clearTimeout(timeout);
-    }
+  /* Format a date string (YYYY-MM-DD) as MM/YYYY for the list view. */
+  function formatDate(dateStr) {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-");
+    if (parts.length >= 2) return parts[1] + "/" + parts[0];
+    return dateStr;
   }
 
-  async function render() {
+  /* Render a single list item in the talks style: date | title + link. */
+  function renderListItem(item) {
+    const domain = domainFromUrl(item.url);
+    const title = item.title || domain;
+    const date = formatDate(item.date);
+
+    return `<li>
+      <span class="talk-date">${escapeHtml(date)}</span>
+      <span class="talk-text">
+        <div class="talk-title">${escapeHtml(title)}</div>
+        <div class="talk-details">
+          <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(domain)}</a>
+        </div>
+      </span>
+    </li>`;
+  }
+
+  function render() {
     const normalized = mediaItems
       .map((item) => (typeof item === "string" ? { url: item } : item))
       .filter((item) => item && item.url);
-    const allLinks = normalized.map((i) => i.url);
-    const links = allLinks.slice(0, 3);
 
+    // Populate the "Show all" list in talks style (date + title + link).
     if (listEl && listEl.dataset.static !== "true") {
-      listEl.innerHTML = allLinks
-        .map((url) => {
-          const domain = domainFromUrl(url);
-          return `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(domain)}</a><span class="media-url">${escapeHtml(url)}</span></li>`;
-        })
-        .join("");
+      listEl.innerHTML = normalized.map(renderListItem).join("");
     }
 
+    // Populate the top-3 preview card grid.
     if (gridEl && gridEl.dataset.static === "true") return;
     if (!gridEl) return;
-    if (links.length === 0) {
+
+    const top3 = normalized.slice(0, 3);
+    if (top3.length === 0) {
       gridEl.innerHTML =
-        '<p class=\"pub-empty\">Add up to 3 links in <code>media.js</code> to show previews here.</p>';
+        '<p class="pub-empty">Add links in <code>media.js</code> to show previews here.</p>';
       return;
     }
 
-    // Render immediate cards for the top 3 (manual meta first, then fallback cards).
-    const top3 = normalized.slice(0, 3);
     gridEl.innerHTML = top3
-      .map((m) => (m.title || m.description || m.image ? renderCard(m) : renderFallbackCard(m.url)))
-      .join("");
-
-    // Upgrade cards with OG metadata when possible.
-    const metas = await Promise.all(
-      links.map(async (url) => {
-        // If manual meta exists for this URL, skip fetching.
-        const manual = top3.find((m) => m.url === url);
-        if (manual && (manual.title || manual.description || manual.image)) return manual;
-        try {
-          return await fetchOgMeta(url);
-        } catch {
-          return { url };
-        }
-      })
-    );
-
-    gridEl.innerHTML = metas
       .map((m) => (m.title || m.description || m.image ? renderCard(m) : renderFallbackCard(m.url)))
       .join("");
   }

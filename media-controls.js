@@ -14,7 +14,7 @@
     }
 
     if (normalizedMode === "all") {
-      // Show both: thumbnails + full list.
+      // Show both: thumbnails stay, full list appears below.
       selectedView.hidden = false;
       allView.hidden = false;
       selectedView.removeAttribute("hidden");
@@ -33,7 +33,7 @@
 
     if (opts && opts.updateHash) {
       // Keep the URL stable without jumping the page; #media-all can scroll past thumbnails.
-      const next = normalizedMode === "all" ? "#media" : "#media-recent";
+      const next = normalizedMode === "all" ? "#media-all" : "#media-recent";
       if (typeof history !== "undefined" && history.replaceState) {
         history.replaceState(null, "", next);
       } else {

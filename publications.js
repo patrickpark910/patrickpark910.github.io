@@ -28,11 +28,11 @@
     {
       id: "resonance26",
       title: "Resonance absorption of fertile material in D-T fusion blankets",
-      authors: "Emma Zoccoli, Greta Li, Patrick Park, Robert Goldston",
+      authors: "Emma Zoccoli (u/=), Greta Li (u/=), Patrick Park (=), Robert Goldston",
       year: 2026,
-      topics: ["fusion non-proliferation"],
+      topics: ["non-proliferation"],
       selected: true,
-      thumb: "assets/pubs/elwr-38north.jpg",
+      thumb: "assets/pubs/blanket26.jpg",
       venues: [
         {
           venue: "In preparation",
@@ -43,9 +43,9 @@
     {
       id: "grph25",
       title: "Myths of nuclear graphite in World War II, with original translations",
-      authors: "Patrick Park, Sebastian Herzele, Timothy Koeth",
+      authors: "Patrick Park, Sebastian Herzele (u), Timothy Koeth",
       year: 2025,
-      topics: ["nuclear forensics"],
+      topics: ["forensics"],
       selected: true,
       thumb: "assets/pubs/grph25-cp1.jpg",
       venues: [
@@ -69,9 +69,9 @@
       title: "Estimating potential tritium and plutonium production in North Korea's Experimental Light Water Reactor",
       authors: "Patrick Park, Alexander Glaser",
       year: 2024,
-      topics: ["nuclear forensics"],
+      topics: ["forensics","non-proliferation","OSINT"],
       selected: true,
-      thumb: "assets/pubs/elwr-38north.jpg",
+      thumb: "assets/pubs/elwr-38north-1.jpg",
       venues: [
         {
           venue: "Science & Global Security, vol. 32, no. 3 (2024)",
