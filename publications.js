@@ -40,6 +40,38 @@
 				},
 			],
 		},
+		/*
+		{
+			id: "rtr-26",
+			title: "He3(n,p)T rates in research and test reactors",
+			authors: "Patrick Park, Alexander Glaser",
+			year: 2026,
+			topics: ["non-proliferation"],
+			selected: false,
+			thumb: "assets/pubs/b8-26.jpg",
+			venues: [
+				{
+					venue: "Under review",
+					links: [], // [{},]
+				},
+			],
+		},
+		*/
+		{
+			id: "b8-26",
+			title: "Nuclear archaeology challenges narratives of Heisenberg's last reactor experiment",
+			authors: "Patrick Park, Brittany Robertson, Miriam Hiebert, Jason Zhao (u), Ciara Sivels, Timothy Koeth",
+			year: 2026,
+			topics: ["forensics"],
+			selected: false,
+			thumb: "assets/pubs/b8-pic-26.png",
+			venues: [
+				{
+					venue: "Under review",
+					links: [], // [{},]
+				},
+			],
+		},
 		{
 			id: "grph25",
 			title: "Myths of nuclear graphite in World War II, with original translations",
